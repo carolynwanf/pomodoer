@@ -5,7 +5,7 @@ const io = require('socket.io')(server,{
     },
 });
 
-const PORT = 80;
+const PORT = 443;
 const NEW_TASK_EVENT = "newTaskItem";
 const STATUS_CHANGE = 'statusChange';
 const CLEAR_COMPLETE = 'clearCompleteTasks';
