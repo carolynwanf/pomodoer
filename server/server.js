@@ -1,14 +1,13 @@
-const express = require('express');
-const app = express();
+var express = require('express');
+var app = express();
 
-const port = process.env.PORT || 5000
+var port = process.env.PORT || 5000
 
-const server = app.listen(port, function() {
+var server = app.listen(port, function() {
     console.log('Node app is running on port', port);
 });
 
 app.use(express.static('build'));
-
 
 const io = require('socket.io')(server);
 
@@ -55,6 +54,6 @@ io.on('connection', (socket) => {
     
 })
 
-// server.listen(PORT, () => {
-//     console.log(`listening on port ${PORT}`)
-// })
+server.listen(PORT, () => {
+    console.log(`listening on port ${PORT}`)
+})
