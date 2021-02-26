@@ -21,13 +21,16 @@ const Collab = (props) => {
         <div className="App-header">
           <header className='collab-header'>
             <Link to ={`/`} className='home-button'> 
-              POMODOER 
+              <h1 className='pomodoer'>
+                POMODOER
+              </h1> 
             </Link>
           </header>
        </div>
         <div className='timer'>
           <OurTimer room={roomId}/> 
         </div>
+        <h2>ROOM: {roomId}</h2>
         <ToDoList room={roomId}/>
       
     </div>
