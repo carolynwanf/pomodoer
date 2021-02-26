@@ -2,7 +2,7 @@ import {useEffect, useRef, useState} from 'react';
 import socketIOClient from 'socket.io-client';
 
 const NEW_TASK_EVENT = 'newTaskItem';
-const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com';
+const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
 const STATUS_CHANGE = 'statusChange'
 const CLEAR_COMPLETE = 'clearCompleteTasks'
 

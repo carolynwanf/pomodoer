@@ -5035,7 +5035,14 @@
     "jest-message-util" "^26.6.2"
     "jest-regex-util" "^26.0.0"
 
-"express@^4.17.1":
+"express-ws@^4.0.0":
+  "integrity" "sha512-KEyUw8AwRET2iFjFsI1EJQrJ/fHeGiJtgpYgEWG3yDv4l/To/m3a2GaYfeGyB3lsWdvbesjF5XCMx+SVBgAAYw=="
+  "resolved" "https://registry.npmjs.org/express-ws/-/express-ws-4.0.0.tgz"
+  "version" "4.0.0"
+  dependencies:
+    "ws" "^5.2.0"
+
+"express@^4.0.0 || ^5.0.0-alpha.1", "express@^4.17.1":
   "integrity" "sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g=="
   "resolved" "https://registry.yarnpkg.com/express/-/express-4.17.1.tgz"
   "version" "4.17.1"
@@ -12083,6 +12090,13 @@
     "is-typedarray" "^1.0.0"
     "signal-exit" "^3.0.2"
     "typedarray-to-buffer" "^3.1.5"
+
+"ws@^5.2.0":
+  "integrity" "sha512-jaHFD6PFv6UgoIVda6qZllptQsMlDEJkTQcybzzXDYM1XO9Y8em691FGMPmM46WGyLU4z9KMgQN+qrux/nhlHA=="
+  "resolved" "https://registry.npmjs.org/ws/-/ws-5.2.2.tgz"
+  "version" "5.2.2"
+  dependencies:
+    "async-limiter" "~1.0.0"
 
 "ws@^6.2.1":
   "integrity" "sha512-GIyAXC2cB7LjvpgMt9EKS2ldqr0MTrORaleiOno6TweZ6r3TKtoFQWay/2PceJ3RuBasOHzXNn5Lrw1X0bEjqA=="

@@ -1,7 +1,7 @@
 import {useEffect, useState, useRef} from 'react';
 import socketIOClient from 'socket.io-client';
 
-const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com';
+const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
 const TIMER_START_STOP = 'timerPush';
 const TIMER_WORK_REST = 'workRestPush';
 
