@@ -6,14 +6,9 @@ var port = process.env.PORT || 5000
 var server = app.listen(port, function() {
     console.log('Node app is running on port', port);
 });
-<<<<<<< HEAD
-<<<<<<< HEAD
+
 app.use(express.static('build'))
 
-=======
->>>>>>> parent of ebcd76aa (Update server.js)
-=======
->>>>>>> parent of ebcd76aa (Update server.js)
 
 
 const io = require('socket.io')(server);
