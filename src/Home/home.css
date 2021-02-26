@@ -1,0 +1,73 @@
+.button .join-button {
+    color: #384635;
+    background-color:  #f3f9ef;
+    border:solid;
+    border-color: #517848;
+    font-family: Helvetica, sans-serif;
+    text-align:center;
+    outline: none;
+    margin-left:2vmin;
+    margin-top: 5vmin;
+    border-radius: 2vmin;
+    padding: .2vmin;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-size: 2vmin;
+    font-weight: bold;
+    text-decoration: none;
+    position: absolute;
+    top: 10%;
+    left: 49%;
+    margin-right: -50%;
+    transform: translate(-50%,-50%)
+}
+
+.input-field {
+    height: 3vmin;
+    width: 25vmin;
+    border-radius: 1vmin;
+    outline-color: #384635;
+    margin-bottom: 2vmin;
+    padding-left:1vmin;
+}
+
+.room-form {
+    color: #384635;
+    height: 5vmin;
+    position: relative;
+    margin-bottom: 2vmin;
+}
+
+.room-form input {
+    margin: 0;
+    position: absolute;
+    top: 99%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%,-50%);
+}
+
+.button {
+    color: #384635;
+    height: 5vmin;
+    position: relative;
+    margin-bottom: 2vmin;
+}
+
+
+.home-header {
+    color: #384635;
+    font-size: 20vmin;
+    height: 60vmin;
+    position: relative;
+}
+
+.home-header text {
+    margin: 0;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%,-50%);
+    cursor: default;
+}

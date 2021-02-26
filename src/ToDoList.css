@@ -1,0 +1,221 @@
+body {background-color: #D2ECC9;}
+.tasks-container {
+    background-color: white;
+    width: 550px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 0px;
+    padding:10px;
+    padding-left: 20px;
+    padding-top: 5px;
+    border: 4px solid #B4CBAC;
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+    padding-bottom: 20px;
+}
+
+.ToDoForm {
+    padding: 10px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 550px;
+}
+
+h1 {
+    margin-top: 0px;
+    margin-bottom:40px;
+}
+
+.float {
+    float: left;
+}
+
+
+.btn-secondary {
+    color: #384635;
+    background-color: hsl(218, 47%, 34%);
+    background-color:  #f3f9ef;
+    border-color: #2E4C80;
+    border-color: #517848;
+    font-family: Helvetica, sans-serif;
+    text-align:center;
+    outline: none;
+    margin-left:5px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border-radius: 14px;
+    padding:2px;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.btn-tertiary {
+    color: #384635;
+    background-color: hsl(218, 47%, 34%);
+    background-color:  #f3f9ef;
+    border-color: #2E4C80;
+    border-color: #517848;
+    font-family: Helvetica, sans-serif;
+    text-align:center;
+    outline: none;
+    margin-left:5px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border-radius: 14px;
+    padding:2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.center {
+
+    margin: 0;
+    margin-top: 20px;
+    position: absolute;
+    left: 50%;
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+}
+
+.btn-primary {
+    color: #384635;
+    background-color: hsl(218, 47%, 34%);
+    background-color:  #f3f9ef;
+    border-color: #2E4C80;
+    border-color: #517848;
+    font-family: Helvetica, sans-serif;
+    text-align:center;
+    outline: none;
+    margin-left:5px;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    border-radius: 14px;
+    padding:2px;
+    padding-left: 25px;
+    padding-right: 25px;
+    font-size: 11px;
+    cursor: pointer;
+
+}
+
+.todo {
+    margin-right: 20px;
+    font-family: Helvetica, sans-serif;
+    color: #384635;
+    margin: 5px;
+    margin-left: 20px;
+    /* display: list-item; */
+    background: url('box.png') no-repeat left top;
+    padding-left: 25px;
+    cursor: pointer;
+}
+
+
+ul.checklist {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+
+}
+
+p {
+    color: #384635;
+    font-family: Helvetica, sans-serif;
+    text-align: center;
+    margin-top: 10px;
+    font-weight: 520;
+    cursor: default;
+
+}
+
+.collab-header {
+    padding-top: 2vmin;
+    margin-bottom:2vmin;
+}
+
+.home-button {
+    text-decoration: none;
+    color: #384635;
+    font-size: 5vmin;
+}
+
+.other-task{
+    color:#B4CBAC
+}
+
+.taskInput {
+    width:50vmin;
+    padding:0.5vmin;
+    margin-left:1vmin;
+    outline-color:#384635;
+}
+
+
+.strike {
+    text-decoration: line-through;
+    background: url('filledbox.png') no-repeat left top;
+    
+}
+
+.toDoFormTitle {
+    display: inline-block;
+}
+
+.toDoFormForm {
+    display: inline-block;
+    width: 215px;
+}
+
+.inputBar{
+    border-color: #E8FADD; 
+    border-radius: 5px;
+    width: 470px;
+    outline-color: #384635;
+}
+
+.App-header{
+    color: #384635;
+    background-color:#E8FADD;
+    text-align:center;
+    font-size: 20px;
+
+}
+
+.timer {
+    background-color: #384635;
+}
+
+.timerTimer{
+    color: #FFFFFF;
+    display: flex; 
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    font-size: calc(65px + 2vmin);
+    padding-top: 5px;
+    /* margin-left:auto;
+    margin-right:auto;
+    width:30%; */
+    padding-bottom: 30px;
+}
+
+.timerMargin{
+    margin-top: 5px;
+    margin-bottom:70px;
+}
+
+
+.buttons {
+    margin-left:auto;
+    margin-right:auto;
+    width: 210px;
+    padding-top: 10px;
+}
+
+

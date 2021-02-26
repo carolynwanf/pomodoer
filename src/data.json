@@ -1,0 +1,12 @@
+[{
+    "id": 1,
+    "task": "tasks show up here!",
+    "complete": false
+  }, 
+
+  {
+    "id": 2,
+    "task": "click 'clear' to get rid of completed tasks",
+    "complete": true
+  }
+]
