@@ -1,7 +1,14 @@
 import {useEffect, useState, useRef} from 'react';
 import socketIOClient from 'socket.io-client';
 
-const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
+//for heroku
+// const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
+
+//for local environ.
+const SOCKET_SERVER_URL = 'http://localhost:3000';
+
+
+
 const TIMER_START_STOP = 'timerPush';
 const TIMER_WORK_REST = 'workRestPush';
 
@@ -33,7 +40,7 @@ const useTimer = (roomId) => {
           if (seconds === -1 && minutes !== 0) {
             setSeconds(59);
             setMinutes((prev) => prev - 1);
-          } else if (minutes === 0 && seconds === -1 && work === true ) {
+          } else if (minutes === 0 && seconds === -1 && work === true) {
             setMinutes(5);
             setSeconds(0);
             setWork(false);
@@ -46,7 +53,7 @@ const useTimer = (roomId) => {
     }
 
     //calls time on every re-render
-    useEffect(time);
+    useEffect(time, [seconds]);
 
 
     useEffect(()=> {

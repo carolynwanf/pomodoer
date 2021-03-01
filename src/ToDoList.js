@@ -10,10 +10,14 @@ const ToDoList = (props) => {
     const {tasks, sendTask, statuses, sendStatus, sendClear} = useList(roomId);
     const [newTask, setNewTask] = React.useState("");
 
+    
+
     // handles typing input
     const handleChange = (e) => {
         setNewTask(e.target.value);
     }
+
+    //need tasks to updated here every time someone joins a room
     
     // sends task to server so it shows up for both people
     const handleSubmit = () => {
@@ -41,6 +45,7 @@ const ToDoList = (props) => {
         console.log('handleClear called')
         sendClear(statuses,tasks);
     }
+    console.log('about to render', tasks);
 
     return (
         <div className='taskList-page'>
@@ -63,18 +68,20 @@ const ToDoList = (props) => {
                 
                 <ul className='checklist'>
                     <p>TO DO:</p>
-                    {tasks.map((task,i)=> (
+                    {tasks.map((task,i)=> {
+                        console.log(task, i)
+                        return (
                         <li
                             key={i}
                             id={i}
-                            className= {`todo ${task.ownedByCurrentUser ? "my-task" : "other-task"} ${statuses[i] ? "strike" : ""}`}
+                            className= {`todo ${task.ownedByCurrentUser ? "my-task" : "other-task"} ${statuses[i] ? "strike" : ""} ${task.status ? "strike": ""}`}
                             onClick={handleClick}
                 
                         >
                             {task.body}
                         </li>
                         
-                    ))}
+                    )})}
                 </ul>
             </div>
             <Button className='center' variant='primary' onClick={handleClear}>CLEAR</Button>     
