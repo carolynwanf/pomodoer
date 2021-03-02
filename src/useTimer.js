@@ -1,11 +1,12 @@
 import {useEffect, useState, useRef} from 'react';
 import socketIOClient from 'socket.io-client';
 
+
 //for heroku
 // const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
 
 //for local environ.
-const SOCKET_SERVER_URL = 'http://localhost:3000';
+const SOCKET_SERVER_URL = 'http://localhost:5000';
 
 
 
@@ -18,6 +19,8 @@ const useTimer = (roomId) => {
     const [minutes, setMinutes] = useState(25);
     const [seconds, setSeconds] = useState(0);
     const socketRef = useRef();
+    const [alarmSound, setAlarmSound] = useState(false)
+
 
     //function for decrementing timer
     const decrement = () => {
@@ -25,6 +28,8 @@ const useTimer = (roomId) => {
         const intervalId = setInterval(() => {
             setSeconds((prev) => prev - 1);
         }, 1000);
+        
+        setAlarmSound(false)
         return () => {
             clearInterval(intervalId);
         };
@@ -33,6 +38,8 @@ const useTimer = (roomId) => {
 
     //calls decrement every time start changes
     useEffect(decrement, [start]);
+
+
 
     //function for adjusting display time
     const time = () => {
@@ -44,10 +51,12 @@ const useTimer = (roomId) => {
             setMinutes(5);
             setSeconds(0);
             setWork(false);
+            setAlarmSound(true)
           } else if (minutes === 0 && seconds === -1 && work === false) {
             setMinutes(25);
             setSeconds(0);
             setWork(true);
+            setAlarmSound(true)
           }
         }
     }
@@ -100,7 +109,7 @@ const useTimer = (roomId) => {
     }
 
 
-    return {start, sendStart, work, sendWork, minutes, seconds}
+    return {start, sendStart, work, sendWork, minutes, seconds, alarmSound}
 }
 
 export default useTimer

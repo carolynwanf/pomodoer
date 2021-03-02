@@ -107,8 +107,17 @@ const useList = (roomId) => {
             for (let i=indices.length-1; i>(-1);i--) {
                 copy.splice(indices[i],1)
             }
-            setTasks(copy);
+            
+            // corrects owner association
+            for (let i=0; i<copy.length; i++) {
+                if (copy[i].senderId === socketRef.current.id) {
+                    copy[i].ownedByCurrentUser = true
+                } else { 
+                    copy[i].ownedByCurrentUser = false
+                }
+            }
 
+            setTasks(copy);
         })
 
         // destroy socket reference when the connection is closed

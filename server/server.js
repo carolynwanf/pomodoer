@@ -30,6 +30,9 @@ const io = require('socket.io')(server, {
     }
 });
 
+// io declaration for production
+// const io = require('socket.io')(server);
+
 const NEW_TASK_EVENT = "newTaskItem";
 const STATUS_CHANGE = 'statusChange';
 const CLEAR_COMPLETE = 'clearCompleteTasks';

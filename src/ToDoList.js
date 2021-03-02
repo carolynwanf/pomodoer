@@ -9,7 +9,6 @@ const ToDoList = (props) => {
     console.log('roomId', roomId)
     const {tasks, sendTask, statuses, sendStatus, sendClear} = useList(roomId);
     const [newTask, setNewTask] = React.useState("");
-
     
 
     // handles typing input
@@ -40,10 +39,12 @@ const ToDoList = (props) => {
         sendStatus(index,statuses)
     }
 
+    console.log('tasks before clear',tasks)
     // on click of clear, updates and sends tasks and statuses to server
     const handleClear = () => {
         console.log('handleClear called')
         sendClear(statuses,tasks);
+        console.log('tasks after clear',tasks)
     }
     console.log('about to render', tasks);
 

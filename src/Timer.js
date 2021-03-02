@@ -1,13 +1,32 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Button from 'react-bootstrap/Button';
 import useTimer from './useTimer';
 import './ToDoList.css'
+import useSound from 'use-sound';
+import audio from './alarm_chime.mp3'
 // import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom';
 
 const OurTimer = (props) => {
   const roomId =  props.room;
-  const {start, sendStart, work, sendWork, minutes, seconds} = useTimer(roomId)
-  
+  const {start, sendStart, work, sendWork, minutes, seconds, alarmSound} = useTimer(roomId)
+
+  const [playSound] = useSound(
+    audio,
+    { volume: 0.75 }
+  );
+
+  const conditionalPlay = () => {
+    console.log(alarmSound)
+    if (alarmSound===true) {
+      playSound()
+    }
+  }
+
+  useEffect(conditionalPlay,[alarmSound])
+
+
+  console.log(audio)
+ 
   //click handlers
   const handleStart = () => sendStart(start);
 
@@ -33,7 +52,7 @@ const OurTimer = (props) => {
         <section className="timerTimer">
           <div>
             <div className = 'buttons'>
-              <Button variant="secondary" onClick={handleStart} >{startStatus}</Button>{' '}
+              <Button variant="secondary" onClick={handleStart} >{startStatus} </Button>{' '}
               <Button variant="secondary" onClick ={handleWork} >{workStatus}</Button>{' '} 
             </div> 
             <h1 className='timerMargin'>{minutes + ':' + secondsDisplay}</h1>
