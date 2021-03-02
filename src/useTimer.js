@@ -3,10 +3,10 @@ import socketIOClient from 'socket.io-client';
 
 
 //for heroku
-// const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
+const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
 
 //for local environ.
-const SOCKET_SERVER_URL = 'http://localhost:5000';
+// const SOCKET_SERVER_URL = 'http://localhost:5000';
 
 
 
