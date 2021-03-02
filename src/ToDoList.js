@@ -44,9 +44,7 @@ const ToDoList = (props) => {
     const handleClear = () => {
         console.log('handleClear called')
         sendClear(statuses,tasks);
-        console.log('tasks after clear',tasks)
     }
-    console.log('about to render', tasks);
 
     return (
         <div className='taskList-page'>
@@ -70,7 +68,6 @@ const ToDoList = (props) => {
                 <ul className='checklist'>
                     <p>TO DO:</p>
                     {tasks.map((task,i)=> {
-                        console.log(task, i)
                         return (
                         <li
                             key={i}

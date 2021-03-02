@@ -4,9 +4,9 @@ import socketIOClient from 'socket.io-client';
 const NEW_TASK_EVENT = 'newTaskItem';
 
 //for heroku
-const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
+// const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
 //for local environ.
-// const SOCKET_SERVER_URL = 'http://localhost:5000';
+const SOCKET_SERVER_URL = 'http://localhost:5000';
 
 const STATUS_CHANGE = 'statusChange'
 const CLEAR_COMPLETE = 'clearCompleteTasks'
@@ -15,7 +15,6 @@ const useList = (roomId) => {
     const [tasks, setTasks] = useState([]);
     const [statuses, setStatuses] = useState([]);
     const socketRef = useRef();
-    console.log('tasks after useList called', tasks)
 
     useEffect(()=> {
         console.log('creating new websocket connection');
@@ -43,9 +42,6 @@ const useList = (roomId) => {
         // listens for population 
         socketRef.current.on('populate', (data) => {
 
-            console.log('populate',data)
-            console.log(data.length)
-
             const savedTasks = [...tasks]
             for (let i=0; i < data.length; i++) {
                 savedTasks.push(data[i])
@@ -58,12 +54,7 @@ const useList = (roomId) => {
                     savedTasks[i].ownedByCurrentUser = false
                 }
             }
-
-
-            console.log('saved tasks', savedTasks)
             setTasks(savedTasks);
-                
-    
             
         })
 
