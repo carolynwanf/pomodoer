@@ -24,12 +24,12 @@ app.use(express.static('build'));
 
 // redirect all requests to index.html to load the js
 app.get('/*', function(req, res) {
-    res.sendFile(path.join(__dirname, 'src/index.js'), function(err) {
+    res.sendFile(path.join(__dirname, 'build/index.html'), function(err) {
       if (err) {
         res.status(500).send(err)
       }
     })
-  })
+})
 
 
 // cors for dev
