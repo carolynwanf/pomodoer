@@ -125,6 +125,7 @@ io.on('connection', (socket) => {
     // populates task list on refresh
     io.in(roomId).emit('populate',database[roomId].tasks)
     // populates timer on refresh
+    console.log(database[roomId].minutes)
     io.in(roomId).emit('setTimer', {
         minutes: database[roomId].minutes,
         seconds: database[roomId].seconds,
@@ -176,6 +177,7 @@ io.on('connection', (socket) => {
     // })
 
     socket.on('time', (data) => {
+        console.log(data)
         database[roomId].minutes = data.minutes
         database[roomId].seconds = data.seconds
         if (data.seconds === -1) {

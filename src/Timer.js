@@ -16,7 +16,6 @@ const OurTimer = (props) => {
   );
 
   const conditionalPlay = () => {
-    console.log(alarmSound)
     if (alarmSound===true) {
       playSound()
     }
@@ -25,7 +24,6 @@ const OurTimer = (props) => {
   useEffect(conditionalPlay,[alarmSound])
 
 
-  console.log(audio)
  
   //click handlers
   const handleStart = () => sendStart(start);

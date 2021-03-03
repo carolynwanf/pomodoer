@@ -36,7 +36,7 @@ const useTimer = (roomId) => {
         
         // populates timer on refresh
         socketRef.current.on('setTimer', (data) => {
-            console.log('timer',data)
+            console.log('timer',JSON.stringify(data))
             setMinutes(data.minutes)
             setSeconds(data.seconds)
         })
@@ -115,9 +115,9 @@ const useTimer = (roomId) => {
           }
         }
         socketRef.current.emit('time', {
-            minutes: minutes,
-            seconds: seconds,
-        });
+                minutes:minutes,
+                seconds:seconds,
+            })
     }
 
     //calls time on every re-render
