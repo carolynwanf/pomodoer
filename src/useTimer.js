@@ -16,11 +16,54 @@ const TIMER_WORK_REST = 'workRestPush';
 const useTimer = (roomId) => {
     const [start, setStart] = useState(false);
     const [work, setWork] = useState(true);
-    const [minutes, setMinutes] = useState(25);
+    const [minutes, setMinutes] = useState(2);
     const [seconds, setSeconds] = useState(0);
-    const [users, setUsers] = useState([])
     const socketRef = useRef();
     const [alarmSound, setAlarmSound] = useState(false)
+
+    // 
+    //function for decrementing timer
+    const decrement = () => {
+        if (start === true) {
+        const intervalId = setInterval(() => {
+            setSeconds((prev) => prev - 1);
+            setAlarmSound(false)
+            console.log('alarm sound set',alarmSound)
+        }, 1000);
+    
+        return () => {
+            clearInterval(intervalId);
+        };
+        }
+    }
+
+    //calls decrement every time start changes
+    useEffect(decrement, [start]);
+
+// console.log(alarmSound)
+
+    //function for adjusting display time
+    const time = () => {
+        if (start === true){
+          if (seconds === -1 && minutes !== 0) {
+            setSeconds(59);
+            setMinutes((prev) => prev - 1);
+          } else if (minutes === 0 && seconds === -1 && work === true) {
+            setMinutes(5);
+            setSeconds(0);
+            setWork(false);
+            setAlarmSound(true)
+          } else if (minutes === 0 && seconds === -1 && work === false) {
+            setMinutes(25);
+            setSeconds(0);
+            setWork(true);
+            setAlarmSound(true)
+          }
+        }
+    }
+
+    //calls time on every re-render
+    useEffect(time, [seconds]);
 
 
     useEffect(()=> {
@@ -28,20 +71,7 @@ const useTimer = (roomId) => {
         socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
             query:{roomId},
         });
-
-        socketRef.current.on('users', (data) => {
-            setUsers(data)
-        })
-
         
-        // populates timer on refresh
-        socketRef.current.on('setTimer', (data) => {
-            console.log('timer',data)
-            setMinutes(data.minutes)
-            setSeconds(data.seconds)
-        })
-
-
         // listens for timer start/stop push
         socketRef.current.on(TIMER_START_STOP, (data) => {
             setStart(!data.start);
@@ -64,64 +94,7 @@ const useTimer = (roomId) => {
         return () => {
             socketRef.current.disconnect();
         };
-    }, [roomId,start,minutes,start,work]);
-
-    useEffect(()=> {
-        
-        // socketRef.current.on('setStatuses', (data) => {
-        //     console.log('statuses',data)
-        //     setStart(data.start)
-        //     setWork(data.work)
-        // })
-    },[roomId,users]);
-
-
-     //function for decrementing timer
-    const decrement = () => {
-    if (start === true) {
-    const intervalId = setInterval(() => {
-        setSeconds((prev) => prev - 1);
-    }, 1000);
-    
-    setAlarmSound(false)
-    return () => {
-        clearInterval(intervalId);
-    };
-    }
-
-    }
-
-    //calls decrement every time start changes
-    useEffect(decrement, [start]);
-
-
-
-    //function for adjusting display time
-    const time = () => {
-        if (start === true){
-          if (seconds === -1 && minutes !== 0) {
-            setSeconds(59);
-            setMinutes((prev) => prev - 1);
-          } else if (minutes === 0 && seconds === -1 && work === true) {
-            setMinutes(5);
-            setSeconds(0);
-            setWork(false);
-            setAlarmSound(true)
-          } else if (minutes === 0 && seconds === -1 && work === false) {
-            setMinutes(25);
-            setSeconds(0);
-            setWork(true);
-            setAlarmSound(true)
-          }
-        }
-        socketRef.current.emit('time', {
-            minutes: minutes,
-            seconds: seconds,
-        });
-    }
-
-    //calls time on every re-render
-    useEffect(time, [seconds]);
+    }, [roomId,start]);
 
     //sends message to server that forwards to all users in room
     const sendStart = (start) => {

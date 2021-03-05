@@ -24,9 +24,6 @@ const OurTimer = (props) => {
 
   useEffect(conditionalPlay,[alarmSound])
 
-
-  console.log(audio)
- 
   //click handlers
   const handleStart = () => sendStart(start);
 

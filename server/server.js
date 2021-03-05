@@ -23,7 +23,6 @@ var server = app.listen(port, function() {
 
 app.use(express.static('build'));
 
-// re-directs requests from all URLs to index.html
 app.get('*', (req, res) => res.sendFile(path.resolve('build', 'index.html')));
 
 
@@ -56,8 +55,6 @@ io.on('connection', (socket) => {
     //        status: boolean,
     //        owner: user ID
     //      }],
-    //      minutes: int,
-    //      seconds: int,
     //   }
     // }
     
@@ -71,11 +68,7 @@ io.on('connection', (socket) => {
                 body: '',
                 status: false,
                 senderId: '',
-            }],
-            minutes: 25,
-            seconds: 0,
-            startStatus: false,
-            workStatus: true,
+            }]
 
         }
     }
@@ -122,18 +115,14 @@ io.on('connection', (socket) => {
     // console.log('connected')
 
     
-    // populates task list on refresh
+
     io.in(roomId).emit('populate',database[roomId].tasks)
-    // populates timer on refresh
-    io.in(roomId).emit('setTimer', {
-        minutes: database[roomId].minutes,
-        seconds: database[roomId].seconds,
-    })
     // console.log('populated')
     io.in(roomId).emit('users', database[roomId].users)
-    
   
 
+
+ 
 
     socket.on(SENDING_USER_ID, (data) => {
         database[roomId].users.push(data.userId)
@@ -159,29 +148,11 @@ io.on('connection', (socket) => {
     })
 
     socket.on(TIMER_START_STOP, (data) => {
-        // console.log('start data',data)
         io.in(roomId).emit(TIMER_START_STOP, data);
-        database[roomId].startStatus = !data.start
-        // console.log('start database',database[roomId].startStatus)
     })
 
     socket.on(TIMER_WORK_REST, (data) => {
         io.in(roomId).emit(TIMER_WORK_REST, data);
-        database[roomId].workStatus = !data.work
-    })
-
-    // io.in(roomId).emit('setStatuses', {
-    //     start: database[roomId].startStatus,
-    //     work: database[roomId].workStatus,
-    // })
-
-    socket.on('time', (data) => {
-        database[roomId].minutes = data.minutes
-        database[roomId].seconds = data.seconds
-        if (data.seconds === -1) {
-            database[roomId].seconds = 0
-        }
-        console.log('time', database[roomId].minutes, database[roomId].seconds)
     })
 
     
