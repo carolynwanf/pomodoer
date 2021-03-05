@@ -16,7 +16,7 @@ const TIMER_WORK_REST = 'workRestPush';
 const useTimer = (roomId) => {
     const [start, setStart] = useState(false);
     const [work, setWork] = useState(true);
-    const [minutes, setMinutes] = useState(2);
+    const [minutes, setMinutes] = useState(25);
     const [seconds, setSeconds] = useState(0);
     const socketRef = useRef();
     const [alarmSound, setAlarmSound] = useState(false)

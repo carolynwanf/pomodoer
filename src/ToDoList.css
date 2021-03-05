@@ -1,36 +1,59 @@
 body {background-color: #D2ECC9;}
+
 .tasks-container {
     background-color: white;
-    width: 550px;
+    width: 72vmin;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 0px;
-    padding:10px;
-    padding-left: 20px;
-    padding-top: 5px;
-    border: 4px solid #B4CBAC;
+    margin-top: 0vmin;
+    padding:1vmin;
+    padding-left: 2vmin;
+    padding-top: 1.5vmin;
+    border: 0.6vmin solid #B4CBAC;
     box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    border-radius: 20px;
-    padding-bottom: 20px;
+    box-shadow: 0vmin 0.6vmin 0.6vmin rgba(0, 0, 0, 0.25);
+    border-radius: 1vmin;
+    padding-bottom: 3vmin;
 }
 
 .ToDoForm {
-    padding: 0px;
+    padding: 0vmin;
     margin-left: auto;
     margin-right: auto;
-    width: 550px;
+    width: 68vmin;
+    margin-top: 1vmin;
 }
 
 h1 {
-    margin-top: 0px;
-    margin-bottom:40px;
+    margin-top: 0vmin;
+    margin-bottom:3.5vmin;
 }
 
 .float {
     float: left;
 }
 
+.btn-primary {
+    color: #384635;
+    background-color: hsl(218, 47%, 34%);
+    background-color:  #f3f9ef;
+    border-color: #2E4C80;
+    border-color: #517848;
+    font-family: Helvetica, sans-serif;
+    text-align:center;
+    outline: none;
+    margin-left:1vmin;
+    margin-top: 1vmin;
+    margin-bottom: 1vmin;
+    border-radius: 2vmin;
+    padding:0.5vmin;
+    padding-left: 3vmin;
+    padding-right: 3vmin;
+    font-size: 1.45vmin;
+    cursor: pointer;
+    font-weight:bold;
+
+}
 
 .btn-secondary {
     color: #384635;
@@ -41,14 +64,14 @@ h1 {
     font-family: Helvetica, sans-serif;
     text-align:center;
     outline: none;
-    margin-left:5px;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    border-radius: 14px;
-    padding:2px;
-    padding-left: 25px;
-    padding-right: 25px;
-    font-size: 11px;
+    margin-left:0vmin;
+    margin-top: 1vmin;
+    margin-bottom: 1vmin;
+    border-radius: 2vmin;
+    padding:0.5vmin;
+    padding-left: 3vmin;
+    padding-right: 3vmin;
+    font-size: 1.45vmin;
     cursor: pointer;
     font-weight:bold;
 }
@@ -62,14 +85,14 @@ h1 {
     font-family: Helvetica, sans-serif;
     text-align:center;
     outline: none;
-    margin-left:5px;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    border-radius: 14px;
-    padding:2px;
-    padding-left: 10px;
-    padding-right: 10px;
-    font-size: 11px;
+    margin-left:0.5vmin;
+    margin-top: 1vmin;
+    margin-bottom: 1vmin;
+    border-radius: 2vmin;
+    padding:0.5vmin;
+    padding-left: 1.3vmin;
+    padding-right: 1.3vmin;
+    font-size: 1.4vmin;
     cursor: pointer;
     font-weight:bold;
 }
@@ -77,50 +100,31 @@ h1 {
 .center {
 
     margin: 0;
-    margin-top: 20px;
+    margin-top: 2vmin;
     position: absolute;
     left: 50%;
     -ms-transform: translateX(-50%);
     transform: translateX(-50%);
 }
 
-.btn-primary {
-    color: #384635;
-    background-color: hsl(218, 47%, 34%);
-    background-color:  #f3f9ef;
-    border-color: #2E4C80;
-    border-color: #517848;
-    font-family: Helvetica, sans-serif;
-    text-align:center;
-    outline: none;
-    margin-left:5px;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    border-radius: 14px;
-    padding:2px;
-    padding-left: 25px;
-    padding-right: 25px;
-    font-size: 11px;
-    cursor: pointer;
-    font-weight:bold;
 
-}
 
 h2 {
     text-align: center;
     color: #5e7557; 
     font-weight: normal;
-    margin-bottom: 0px;
+    margin-bottom: 0vmin;
 }
 .todo {
-    margin-right: 20px;
+    margin-right: 2vmin;
     font-family: Helvetica, sans-serif;
     color: #384635;
-    margin: 5px;
-    margin-left: 20px;
+    margin: 1vmin;
+    margin-left: 3vmin;
     /* display: list-item; */
     background: url('box.png') no-repeat left top;
-    padding-left: 25px;
+    background-size: 2.6vmin;
+    padding-left: 3vmin;
     cursor: pointer;
 }
 
@@ -136,9 +140,10 @@ p {
     color: #384635;
     font-family: Helvetica, sans-serif;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 1vmin;
     font-weight: 520;
     cursor: default;
+    font-size: 2.2vmin
 
 }
 
@@ -159,8 +164,10 @@ p {
 
 .taskInput {
     width:50vmin;
+    height: 1.5vmin;
     padding:0.5vmin;
     margin-left:1vmin;
+    margin-right:0.5vmin;
     outline-color:#384635;
 }
 
@@ -168,6 +175,7 @@ p {
 .strike {
     text-decoration: line-through;
     background: url('filledbox.png') no-repeat left top;
+    background-size: 2.6vmin;
     
 }
 
@@ -175,17 +183,20 @@ p {
     display: inline-block;
 }
 
-.toDoFormForm {
-    display: inline-block;
-    width: 215px;
+li {
+    font-size: 2vmin;
 }
 
-.inputBar{
+h2 {
+    font-size:3vmin;
+}
+
+/* .inputBar{
     border-color: #E8FADD; 
     border-radius: 5px;
-    width: 470px;
+    width: 1000vmin;
     outline-color: #384635;
-}
+} */
 
 .App-header{
     color: #384635;
@@ -204,12 +215,12 @@ p {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    font-size: calc(65px + 2vmin);
-    padding-top: 5px;
+    font-size: 12vmin;
+    padding-top: 0.5vmin;
     /* margin-left:auto;
     margin-right:auto;
     width:30%; */
-    padding-bottom: 30px;
+    padding-bottom: 4vmin;
     height: 35vmin;
     position: relative;
 }
@@ -229,16 +240,36 @@ p {
 }
 
 .timerMargin{
-    margin-top: 5px;
-    margin-bottom:70px;
+    margin-top: 0.5vmin;
+    margin-bottom:8vmin;
 }
 
+.startButton {
+    margin: 0;
+    position: absolute;
+    top: 80%;
+    left: 25%;
+    /* margin-right: -50%; */
+    transform: translate(-50%,-50%);
+}
 
+.workButton {
+    margin: 0;
+    position: absolute;
+    top: 80%;
+    left: 75%;
+    margin-right: -50%;
+    transform: translate(-50%,-50%);
+}
 .buttons {
+    margin-top: 8vmin;
     margin-left:auto;
     margin-right:auto;
-    width: 210px;
-    padding-top: 10px;
+    width: 26.5vmin;
+    padding-top: 2vmin;
+    height: 5vmin;
+    position: relative;
+    margin-bottom: 0vmin;
 }
 
 

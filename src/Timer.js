@@ -49,8 +49,8 @@ const OurTimer = (props) => {
         <section className="timerTimer">
           <div>
             <div className = 'buttons'>
-              <Button variant="secondary" onClick={handleStart} >{startStatus} </Button>{' '}
-              <Button variant="secondary" onClick ={handleWork} >{workStatus}</Button>{' '} 
+              <Button variant="secondary" className='startButton' onClick={handleStart} >{startStatus} </Button>{' '}
+              <Button variant="secondary" className='workButton'onClick ={handleWork} >{workStatus}</Button>{' '} 
             </div> 
             <h1 className='timerMargin'>{minutes + ':' + secondsDisplay}</h1>
           </div>

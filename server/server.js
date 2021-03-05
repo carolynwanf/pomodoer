@@ -55,6 +55,16 @@ io.on('connection', (socket) => {
     //        status: boolean,
     //        owner: user ID
     //      }],
+    //      work: {
+    //          action: boolean
+    //          countdown: int
+    //          clock: int
+    //      }
+     //      rest: {
+    //          action: boolean
+    //          countdown: int
+    //          clock: int
+    //      }
     //   }
     // }
     
@@ -68,8 +78,17 @@ io.on('connection', (socket) => {
                 body: '',
                 status: false,
                 senderId: '',
-            }]
-
+            }],
+            work: {
+                action: true,
+                countdown: 1500000,
+                clock: 1
+            },
+            rest: {
+                action: true,
+                countdown: 300000,
+                clock: 0
+            }
         }
     }
 
@@ -110,19 +129,12 @@ io.on('connection', (socket) => {
     
     })
 
-
-
     // console.log('connected')
-
-    
 
     io.in(roomId).emit('populate',database[roomId].tasks)
     // console.log('populated')
     io.in(roomId).emit('users', database[roomId].users)
-  
 
-
- 
 
     socket.on(SENDING_USER_ID, (data) => {
         database[roomId].users.push(data.userId)
@@ -149,10 +161,23 @@ io.on('connection', (socket) => {
 
     socket.on(TIMER_START_STOP, (data) => {
         io.in(roomId).emit(TIMER_START_STOP, data);
+        let oneToAlter = database[roomId].rest
+        if (database[roomId].work.clock > database[roomId].rest.clock) {
+            oneToAlter = database[roomId].work
+        }
+        oneToAlter.clock = Date.now()
+        oneToAlter.action = !data.start
+        //oneToAlter.countdown = data.countdown
+
     })
 
     socket.on(TIMER_WORK_REST, (data) => {
         io.in(roomId).emit(TIMER_WORK_REST, data);
+        let oneToAlter = data.work ?  database[roomId].rest : database[roomId].work
+        let assocTime = data.work ? 300000 : 1500000
+        oneToAlter.clock = Date.now()
+        oneToAlter.action = !data.start
+        oneToAlter.countdown = assocTime
     })
 
     
