@@ -6,7 +6,7 @@ import Button from 'react-bootstrap/Button';
 
 const ToDoList = (props) => {
     const roomId =  props.room; // gets roomId from props
-    console.log('roomId', roomId)
+    // console.log('roomId', roomId)
     const {tasks, sendTask, statuses, sendStatus, sendClear} = useList(roomId);
     const [newTask, setNewTask] = React.useState("");
     
@@ -33,20 +33,20 @@ const ToDoList = (props) => {
 
     // on click of task, sends statuses and index so that statuses can be updated
     const handleClick = (e) => {
-        console.log('handleClick');
+        // console.log('handleClick');
         e.preventDefault();
         const index = e.currentTarget.id;
         sendStatus(index,statuses)
     }
 
-    console.log('tasks before clear',tasks)
+    // console.log('tasks before clear',tasks)
     // on click of clear, updates and sends tasks and statuses to server
     const handleClear = () => {
-        console.log('handleClear called')
+        // console.log('handleClear called')
         sendClear(statuses,tasks);
-        console.log('tasks after clear',tasks)
+        // console.log('tasks after clear',tasks)
     }
-    console.log('about to render', tasks);
+    // console.log('about to render', tasks);
 
     return (
         <div className='taskList-page'>
@@ -70,7 +70,7 @@ const ToDoList = (props) => {
                 <ul className='checklist'>
                     <p>TO DO:</p>
                     {tasks.map((task,i)=> {
-                        console.log(task, i)
+                        // console.log(task, i)
                         return (
                         <li
                             key={i}

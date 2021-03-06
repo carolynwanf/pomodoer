@@ -43,6 +43,7 @@ const CLEAR_COMPLETE = 'clearCompleteTasks';
 const TIMER_START_STOP = 'timerPush';
 const TIMER_WORK_REST = 'workRestPush';
 const SENDING_USER_ID = 'sendId'
+const INFORMATION_TO_CLIENT = 'sendInfo'
 
 io.on('connection', (socket) => {
 
@@ -161,23 +162,38 @@ io.on('connection', (socket) => {
 
     socket.on(TIMER_START_STOP, (data) => {
         io.in(roomId).emit(TIMER_START_STOP, data);
-        let oneToAlter = database[roomId].rest
+        let oneToAlter = database[roomId].rest;
+        // let sendWork = false
         if (database[roomId].work.clock > database[roomId].rest.clock) {
             oneToAlter = database[roomId].work
+            // sendWork = true
         }
         oneToAlter.clock = Date.now()
         oneToAlter.action = !data.start
         //oneToAlter.countdown = data.countdown
+
+        // info = sendWork ? database[roomId].work : database[roomId].rest
+
+        io.in(roomId).emit(INFORMATION_TO_CLIENT, oneToAlter)
+        // console.log(info)
+
+        console.log('start/stop alteration', JSON.stringify(oneToAlter))
+        // console.log('work object', JSON.stringify(database[roomId].work))
+
 
     })
 
     socket.on(TIMER_WORK_REST, (data) => {
         io.in(roomId).emit(TIMER_WORK_REST, data);
         let oneToAlter = data.work ?  database[roomId].rest : database[roomId].work
+        let otherOne = data.work ? database[roomId].work : database[roomId].rest
         let assocTime = data.work ? 300000 : 1500000
         oneToAlter.clock = Date.now()
-        oneToAlter.action = !data.start
+        oneToAlter.action = otherOne.action
         oneToAlter.countdown = assocTime
+
+        // console.log('work/rest alteration', JSON.stringify(oneToAlter))
+        // console.log('work object', JSON.stringify(database[roomId].work))
     })
 
     

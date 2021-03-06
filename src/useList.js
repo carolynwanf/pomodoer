@@ -15,7 +15,7 @@ const useList = (roomId) => {
     const [tasks, setTasks] = useState([]);
     const [statuses, setStatuses] = useState([]);
     const socketRef = useRef();
-    console.log('tasks after useList called', tasks)
+    // console.log('tasks after useList called', tasks)
 
     useEffect(()=> {
         console.log('creating new websocket connection');
@@ -43,8 +43,8 @@ const useList = (roomId) => {
         // listens for population 
         socketRef.current.on('populate', (data) => {
 
-            console.log('populate',data)
-            console.log(data.length)
+            // console.log('populate',data)
+            // console.log(data.length)
 
             const savedTasks = [...tasks]
             for (let i=0; i < data.length; i++) {
@@ -60,7 +60,7 @@ const useList = (roomId) => {
             }
 
 
-            console.log('saved tasks', savedTasks)
+            // console.log('saved tasks', savedTasks)
             setTasks(savedTasks);
                 
     
@@ -76,7 +76,7 @@ const useList = (roomId) => {
 
         // listens for connection
         socketRef.current.on('connect', ()=>{
-            console.log(socketRef.current.id)
+            // console.log(socketRef.current.id)
             sendId(socketRef.current.id)
             //maybe add population in here?
 
