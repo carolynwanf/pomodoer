@@ -42,6 +42,11 @@ const OurTimer = (props) => {
     secondsDisplay = seconds
   }
 
+  const newTitle = minutes + ':' + secondsDisplay + ' POMODOER'
+  if (document.title != newTitle) {
+    document.title = newTitle;
+}
+
   return (
     
     <section>

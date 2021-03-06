@@ -160,8 +160,10 @@ io.on('connection', (socket) => {
         }
     })
 
+    // listens for press of start/stop button
     socket.on(TIMER_START_STOP, (data) => {
         io.in(roomId).emit(TIMER_START_STOP, data);
+        
         let oneToAlter = database[roomId].rest;
         // let sendWork = false
         if (database[roomId].work.clock > database[roomId].rest.clock) {
@@ -170,7 +172,7 @@ io.on('connection', (socket) => {
         }
         oneToAlter.clock = Date.now()
         oneToAlter.action = !data.start
-        //oneToAlter.countdown = data.countdown
+        oneToAlter.countdown = data.countdown
 
         // info = sendWork ? database[roomId].work : database[roomId].rest
 
@@ -192,6 +194,7 @@ io.on('connection', (socket) => {
         oneToAlter.action = otherOne.action
         oneToAlter.countdown = assocTime
 
+        io.in(roomId).emit(INFORMATION_TO_CLIENT, oneToAlter)
         // console.log('work/rest alteration', JSON.stringify(oneToAlter))
         // console.log('work object', JSON.stringify(database[roomId].work))
     })

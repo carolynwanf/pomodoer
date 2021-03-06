@@ -76,11 +76,13 @@ const useTimer = (roomId) => {
             console.log('start/stop received')
         });
 
+
         //listens for information
         socketRef.current.on(INFORMATION_TO_CLIENT, (data) => {
-            // setAction(data.action)
-            // setCountdown(data.countdown)
-            // setClock(data.clock)
+            setAction(data.action)
+            setCountdown(data.countdown)
+            setClock(data.clock)
+            setStart(data.action)
             console.log('information received', data)
         });
 
@@ -102,7 +104,7 @@ const useTimer = (roomId) => {
         return () => {
             socketRef.current.disconnect();
         };
-    }, [roomId,start]);
+    }, [roomId]);
 
     //calculates display time in ms based on server data
     const calculateTime = () => {
@@ -148,16 +150,19 @@ const useTimer = (roomId) => {
     // }
 
     useEffect(() => {
-        calculateTime()
-        convert()
-    },[action,countdown,clock,seconds,start])
+        setTimeout(() => {
+            calculateTime();
+            convert();
+          }, 0);
+    })
 
     
 
     //sends message to server that forwards to all users in room
     const sendStart = (start) => {
         socketRef.current.emit(TIMER_START_STOP, {
-            start: start
+            start: start,
+            countdown: display,
         });
     }
 
