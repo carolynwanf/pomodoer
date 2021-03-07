@@ -15,40 +15,14 @@ const TIMER_WORK_REST = 'workRestPush';
 const INFORMATION_TO_CLIENT = 'sendInfo';
 const POPULATE_TIMER = 'populateTimer';
 
-// var clientData = {
-//     start: false,
-//     work: true,
-//     minutes: 25,
-//     seconds: 0,
-//     alarmSound: false,
-//     infoReceived: false,
-//     action: false,
-//     countdown: 0,
-//     clock: 0,
-//     display: 0,
-// }
-
-// var start = clientData.start
-// var work = clientData.work
-// var minutes = clientData.minutes
-// var seconds = clientData.seconds
-// var alarmSound = clientData.alarmSound
-// var infoReceived = clientData.infoReceived
-// var action = clientData.action
-// var countdown = clientData.countdown
-// var clock = clientData.clock
-// var display = display 
-
 const useTimer = (roomId) => {
     
+    // initialize states + refs
     const [start, setStart] = useState(false);
     const [work, setWork] = useState(true);
     const socketRef = useRef();
     const [alarmSound, setAlarmSound] = useState(false)
     const [infoReceived, setInfoReceived] = useState(false)
-
-    //initialize these after info pulled from server?
-
     const [countdown, setCountdown] = useState(1500000)
     const [clock, setClock] = useState(1614986917000)
     const [display, setDisplay] = useState(1500000)
@@ -60,7 +34,7 @@ const useTimer = (roomId) => {
         });
         
 
-        //listens for information on connection
+        //receives info from server on connection if info has not been received yet
         if (infoReceived === false) {
             socketRef.current.on(POPULATE_TIMER, (data) => {
                 setCountdown(data.countdown)
@@ -76,7 +50,8 @@ const useTimer = (roomId) => {
             });
         }
 
-        //listens for information
+        // listens for info from database that is emitted when start/stop button is pushed, 
+        // when work/rest button is pushed, or when timer counts down to zero
         socketRef.current.on(INFORMATION_TO_CLIENT, (data) => {
             setCountdown(data.countdown)
             setClock(data.clock)
@@ -123,7 +98,7 @@ const useTimer = (roomId) => {
             if (display === 0 && !alarmSound) {
                 console.log('ALARM IS SOUNDING')
                 setAlarmSound(true)
-                const newWork = !work;
+                const newWork = work;
                 sendWork(newWork);
             } else if (alarmSound) {
                 setAlarmSound(false)
