@@ -15,18 +15,18 @@ const TIMER_WORK_REST = 'workRestPush';
 const INFORMATION_TO_CLIENT = 'sendInfo';
 const POPULATE_TIMER = 'populateTimer';
 
-var clientData = {
-    start: false,
-    work: true,
-    minutes: 25,
-    seconds: 0,
-    alarmSound: false,
-    infoReceived: false,
-    action: false,
-    countdown: 0,
-    clock: 0,
-    display: 0,
-}
+// var clientData = {
+//     start: false,
+//     work: true,
+//     minutes: 25,
+//     seconds: 0,
+//     alarmSound: false,
+//     infoReceived: false,
+//     action: false,
+//     countdown: 0,
+//     clock: 0,
+//     display: 0,
+// }
 
 // var start = clientData.start
 // var work = clientData.work
@@ -43,15 +43,12 @@ const useTimer = (roomId) => {
     
     const [start, setStart] = useState(false);
     const [work, setWork] = useState(true);
-    const [minutes, setMinutes] = useState(25);
-    const [seconds, setSeconds] = useState(0);
     const socketRef = useRef();
     const [alarmSound, setAlarmSound] = useState(false)
     const [infoReceived, setInfoReceived] = useState(false)
 
     //initialize these after info pulled from server?
 
-    const [action,setAction] = useState(false)
     const [countdown, setCountdown] = useState(1500000)
     const [clock, setClock] = useState(1614986917000)
     const [display, setDisplay] = useState(1500000)
@@ -62,47 +59,43 @@ const useTimer = (roomId) => {
             query:{roomId},
         });
         
-        // listens for timer start/stop push
-        socketRef.current.on(TIMER_START_STOP, (data) => {
-            setStart(!data.start);
-            console.log('start/stop received')
-        });
 
         //listens for information on connection
         if (infoReceived === false) {
             socketRef.current.on(POPULATE_TIMER, (data) => {
-                setAction(data.action)
                 setCountdown(data.countdown)
                 setDisplay(data.countdown)
                 setClock(data.clock)
                 setStart(data.action)
                 console.log('connection information received', data)
-                console.log('set with data', action,countdown,display,clock)
+                console.log('set with data',countdown,display,clock)
                 setInfoReceived(true)
+                calculateTime(data.countdown, data.clock);
+                //convert();
                 console.log('setInfoReceived', infoReceived)
             });
         }
 
         //listens for information
         socketRef.current.on(INFORMATION_TO_CLIENT, (data) => {
-            setAction(data.action)
             setCountdown(data.countdown)
             setClock(data.clock)
             setStart(data.action)
+            calculateTime(data.countdown, data.clock);
             console.log('information received', data)
         });
 
         socketRef.current.on(TIMER_WORK_REST, (data) => {
-            const work = data.work
-            setWork(!work)
-            if (work === true){
-                setMinutes(5);
-                setSeconds(0);
+            setWork(data.work)
+            if (data.work) {
+                setDisplay(300000);
+                setCountdown(300000);
+                setClock(data.clock);
               } else {
-                setMinutes(25);
-                setSeconds(0);
+                setDisplay(1500000);
+                setCountdown(1500000);
+                setClock(data.clock);
               }
-    
         })
 
         // destroy socket reference when the connection is closed
@@ -112,58 +105,81 @@ const useTimer = (roomId) => {
     }, [roomId]);
 
     //calculates display time in ms based on server data
-    const calculateTime = () => {
-        if (action === false) {
-            setDisplay(countdown)
-            console.log('setting display',display,countdown)
-        } else {
-            const difference = Date.now()-clock
-            setDisplay(Math.max(0,countdown-difference))
-            console.log('difference',difference)
-            console.log('currentDate',Date.now())
+    const calculateTime = (currentCountdown, currentClock) => {
+        if (infoReceived === true) {
+            if (start === false) {
+                setDisplay(currentCountdown)
+            } else {
+                const difference = Date.now()-currentClock
+                setDisplay(Math.max(0,currentCountdown-difference))
+                console.log('difference',difference)
+                console.log('currentDate',Date.now())
+            }
         }
-        console.log('inside caluclateTime',display)
     } 
 
-    const convert = () => {
-        setMinutes(Math.floor(display/1000/60))
-        console.log('between setting minutes and seconds', display)
-        setSeconds(Math.floor ((display/1000) % 60))
-        console.log('inside conversion', display, minutes, seconds)
-        if (minutes === seconds === 0) {
-            setAlarmSound(true)
-            setWork(!work)
-            socketRef.current.emit(TIMER_WORK_REST, {
-                work:work
-            })
-            console.log('inside conditional in conversion' )
-        } else {
-            setAlarmSound(false)
+    const checkAlarm = () => {
+        if (infoReceived === true) {
+            if (display === 0 && !alarmSound) {
+                console.log('ALARM IS SOUNDING')
+                setAlarmSound(true)
+                const newWork = !work;
+                sendWork(newWork);
+            } else if (alarmSound) {
+                setAlarmSound(false)
+            }
         }
     }
 
+
     useEffect(() => {
-        setTimeout(() => {
-            calculateTime();
-            convert();
-        }, 0);
-    })
+
+        const foobar = setInterval(()=> {
+            console.log(countdown, clock, 'doing things')
+            calculateTime(countdown, clock);
+            checkAlarm();
+        }, 1000 )
+        return function cleanup() {
+            clearInterval(foobar)
+        }
+    
+    });
 
     //sends message to server that forwards to all users in room
     const sendStart = (start) => {
+        const newStart = !start;
         socketRef.current.emit(TIMER_START_STOP, {
-            start: start,
+            start: newStart,
             countdown: display,
+            clock: Date.now()
         });
+        setStart(newStart);
     }
 
     const sendWork = (work) => {
+        console.log('is it work?', work)
+        const newWork = !work;
+        console.log('is it work now?', newWork);
+        const newClock = Date.now();
         socketRef.current.emit(TIMER_WORK_REST, {
-            work: work,
+            work: newWork,
+            clock: newClock
         })
+        setWork(newWork);
+        if (newWork) {
+            console.log('because it is work, set to 25')
+            setDisplay(1500000);
+            setCountdown(1500000);
+            setClock(newClock);
+          } else {
+            console.log('because it is not work, set to 5')
+            setDisplay(300000);
+            setCountdown(300000);
+            setClock(newClock);
+          }
     }
 
-    return {start, sendStart, work, sendWork, minutes, seconds, alarmSound, infoReceived}
+    return {start, sendStart, work, sendWork, display, alarmSound, infoReceived}
 }
 
 export default useTimer

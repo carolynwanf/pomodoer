@@ -8,7 +8,7 @@ import audio from './alarm_chime.mp3'
 
 const OurTimer = (props) => {
   const roomId =  props.room;
-  const {start, sendStart, work, sendWork, minutes, seconds, alarmSound, infoReceived} = useTimer(roomId)
+  const {start, sendStart, work, sendWork, display, alarmSound, infoReceived} = useTimer(roomId)
 
   const [playSound] = useSound(
     audio,
@@ -35,34 +35,31 @@ const OurTimer = (props) => {
   let startStatus = (start ? 'STOP' : 'START');
   let workStatus = (work ? 'REST' : 'WORK');
   //adds zero when seconds gets into single digits
-  let secondsDisplay;
-  if (seconds < 10) {
-    secondsDisplay = '0'+seconds
-  } else {
-    secondsDisplay = seconds
-  }
 
-  const newTitle = minutes + ':' + secondsDisplay + ' POMODOER'
-  if (document.title !== newTitle) {
-    document.title = newTitle;
-}
 
   if (infoReceived === false) {
     return (
       <section>
 
           <section className="timerTimer">
-            <div>
-              <div className = 'buttons'>
-                <Button variant="secondary" className='startButton' onClick={handleStart} >{startStatus} </Button>{' '}
-                <Button variant="secondary" className='workButton'onClick ={handleWork} >{workStatus}</Button>{' '} 
-              </div> 
-            </div>
   
         </section> 
       </section>
     )
   } else {
+    const minutes = Math.floor(display/1000/60);
+    const seconds = Math.floor((display/1000) % 60);
+    let secondsDisplay;
+    if (seconds < 10) {
+      secondsDisplay = '0'+seconds
+    } else {
+      secondsDisplay = seconds
+    }
+
+    const newTitle = minutes + ':' + secondsDisplay + ' POMODOER'
+    if (document.title !== newTitle) {
+      document.title = newTitle;
+  }
     return (
     
       <section>
