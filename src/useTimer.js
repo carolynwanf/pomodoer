@@ -15,10 +15,31 @@ const TIMER_WORK_REST = 'workRestPush';
 const INFORMATION_TO_CLIENT = 'sendInfo';
 const POPULATE_TIMER = 'populateTimer';
 
+var clientData = {
+    start: false,
+    work: true,
+    minutes: 25,
+    seconds: 0,
+    alarmSound: false,
+    infoReceived: false,
+    action: false,
+    countdown: 0,
+    clock: 0,
+    display: 0,
+}
+
+// var start = clientData.start
+// var work = clientData.work
+// var minutes = clientData.minutes
+// var seconds = clientData.seconds
+// var alarmSound = clientData.alarmSound
+// var infoReceived = clientData.infoReceived
+// var action = clientData.action
+// var countdown = clientData.countdown
+// var clock = clientData.clock
+// var display = display 
+
 const useTimer = (roomId) => {
-    // var clientData = {
-    //     start: 
-    // }
     
     const [start, setStart] = useState(false);
     const [work, setWork] = useState(true);
