@@ -8,7 +8,7 @@ import audio from './alarm_chime.mp3'
 
 const OurTimer = (props) => {
   const roomId =  props.room;
-  const {start, sendStart, work, sendWork, minutes, seconds, alarmSound} = useTimer(roomId)
+  const {start, sendStart, work, sendWork, minutes, seconds, alarmSound, infoReceived} = useTimer(roomId)
 
   const [playSound] = useSound(
     audio,
@@ -43,26 +43,43 @@ const OurTimer = (props) => {
   }
 
   const newTitle = minutes + ':' + secondsDisplay + ' POMODOER'
-  if (document.title != newTitle) {
+  if (document.title !== newTitle) {
     document.title = newTitle;
 }
 
-  return (
-    
-    <section>
-        
-        <section className="timerTimer">
-          <div>
-            <div className = 'buttons'>
-              <Button variant="secondary" className='startButton' onClick={handleStart} >{startStatus} </Button>{' '}
-              <Button variant="secondary" className='workButton'onClick ={handleWork} >{workStatus}</Button>{' '} 
-            </div> 
-            <h1 className='timerMargin'>{minutes + ':' + secondsDisplay}</h1>
-          </div>
+  if (infoReceived === false) {
+    return (
+      <section>
 
-      </section> 
-    </section>
-  )
+          <section className="timerTimer">
+            <div>
+              <div className = 'buttons'>
+                <Button variant="secondary" className='startButton' onClick={handleStart} >{startStatus} </Button>{' '}
+                <Button variant="secondary" className='workButton'onClick ={handleWork} >{workStatus}</Button>{' '} 
+              </div> 
+            </div>
+  
+        </section> 
+      </section>
+    )
+  } else {
+    return (
+    
+      <section>
+          
+          <section className="timerTimer">
+            <div>
+              <div className = 'buttons'>
+                <Button variant="secondary" className='startButton' onClick={handleStart} >{startStatus} </Button>{' '}
+                <Button variant="secondary" className='workButton'onClick ={handleWork} >{workStatus}</Button>{' '} 
+              </div> 
+              <h1 className='timerMargin'>{minutes + ':' + secondsDisplay}</h1>
+            </div>
+  
+        </section> 
+      </section>
+    )
+  }
 }
 
 export default OurTimer

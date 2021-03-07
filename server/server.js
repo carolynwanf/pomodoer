@@ -42,8 +42,9 @@ const STATUS_CHANGE = 'statusChange';
 const CLEAR_COMPLETE = 'clearCompleteTasks';
 const TIMER_START_STOP = 'timerPush';
 const TIMER_WORK_REST = 'workRestPush';
-const SENDING_USER_ID = 'sendId'
-const INFORMATION_TO_CLIENT = 'sendInfo'
+const SENDING_USER_ID = 'sendId';
+const INFORMATION_TO_CLIENT = 'sendInfo';
+const POPULATE_TIMER = 'populateTimer';
 
 io.on('connection', (socket) => {
 
@@ -81,8 +82,8 @@ io.on('connection', (socket) => {
                 senderId: '',
             }],
             work: {
-                action: true,
-                countdown: 1500000,
+                action: false,
+                countdown: 10000,
                 clock: 1
             },
             rest: {
@@ -134,7 +135,14 @@ io.on('connection', (socket) => {
 
     io.in(roomId).emit('populate',database[roomId].tasks)
     // console.log('populated')
-    io.in(roomId).emit('users', database[roomId].users)
+
+    // sends most recent to client
+    var sendWork = true;
+    if (database[roomId].work.clock < database[roomId].rest.clock) {
+        sendWork = false;
+    }
+    const oneToSend = sendWork ? database[roomId].work : database[roomId].rest
+    io.in(roomId).emit(POPULATE_TIMER, oneToSend);
 
 
     socket.on(SENDING_USER_ID, (data) => {
