@@ -28,14 +28,14 @@ app.get('*', (req, res) => res.sendFile(path.resolve('build', 'index.html')));
 
 
 // cors for dev
-const io = require('socket.io')(server, {
-    cors: {
-        origin: "http://localhost:3000"
-    }
-});
+// const io = require('socket.io')(server, {
+//     cors: {
+//         origin: "http://localhost:3000"
+//     }
+// });
 
 // io declaration for production
-// const io = require('socket.io')(server);
+const io = require('socket.io')(server);
 
 const NEW_TASK_EVENT = "newTaskItem";
 const STATUS_CHANGE = 'statusChange';
@@ -83,7 +83,7 @@ io.on('connection', (socket) => {
             }],
             work: {
                 action: false,
-                countdown: 10000,
+                countdown: 1500000,
                 clock: 1
             },
             rest: {

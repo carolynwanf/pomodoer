@@ -6,10 +6,13 @@ import useSound from 'use-sound';
 import audio from './alarm_chime.mp3'
 // import { __SECRET_INTERNALS_DO_NOT_USE_OR_YOU_WILL_BE_FIRED } from 'react-dom';
 
+var context = new AudioContext();
+
 const OurTimer = (props) => {
   const roomId =  props.room;
   const {start, sendStart, work, sendWork, display, alarmSound, infoReceived} = useTimer(roomId)
 
+  
   const [playSound] = useSound(
     audio,
     { volume: 0.75 }
@@ -25,8 +28,10 @@ const OurTimer = (props) => {
   useEffect(conditionalPlay,[alarmSound])
 
   //click handlers
-  const handleStart = () => sendStart(start);
-
+  const handleStart = () => {
+    context.resume()
+    sendStart(start);
+  }
   const handleWork = () => {
     sendWork(work)
   }
@@ -55,11 +60,12 @@ const OurTimer = (props) => {
     } else {
       secondsDisplay = seconds
     }
-
-    const newTitle = minutes + ':' + secondsDisplay + ' POMODOER'
+    
+    const time = minutes + ':' + secondsDisplay
+    const newTitle =  time + ' POMODOER'
     if (document.title !== newTitle) {
       document.title = newTitle;
-  }
+    }
     return (
     
       <section>
@@ -70,7 +76,7 @@ const OurTimer = (props) => {
                 <Button variant="secondary" className='startButton' onClick={handleStart} >{startStatus} </Button>{' '}
                 <Button variant="secondary" className='workButton'onClick ={handleWork} >{workStatus}</Button>{' '} 
               </div> 
-              <h1 className='timerMargin'>{minutes + ':' + secondsDisplay}</h1>
+              <h1 className='timerMargin'>{time}</h1>
             </div>
   
         </section> 

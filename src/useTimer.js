@@ -1,12 +1,11 @@
 import {useEffect, useState, useRef} from 'react';
 import socketIOClient from 'socket.io-client';
 
-
 //for heroku
-// const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
+const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
 
 //for local environ.
-const SOCKET_SERVER_URL = 'http://localhost:5000';
+// const SOCKET_SERVER_URL = 'http://localhost:5000';
 
 
 
@@ -18,13 +17,22 @@ const POPULATE_TIMER = 'populateTimer';
 const useTimer = (roomId) => {
     
     // initialize states + refs
+
+    // is the timer started?
     const [start, setStart] = useState(false);
+    // is the timer in work mode or rest mode?
     const [work, setWork] = useState(true);
+    // who is the current user interacting with client
     const socketRef = useRef();
+    // is the alarm supposed to be going off?
     const [alarmSound, setAlarmSound] = useState(false)
+    // has initial info been received from teh server
     const [infoReceived, setInfoReceived] = useState(false)
+    // what was the timer at the last time someone pressed start/stop or work/rest?
     const [countdown, setCountdown] = useState(1500000)
+    // what was the time the last time someone pressed a button
     const [clock, setClock] = useState(1614986917000)
+    // what should the timer be displaying (in ms)
     const [display, setDisplay] = useState(1500000)
 
     useEffect(()=> {
@@ -37,16 +45,13 @@ const useTimer = (roomId) => {
         //receives info from server on connection if info has not been received yet
         if (infoReceived === false) {
             socketRef.current.on(POPULATE_TIMER, (data) => {
+                setStart(data.action)
                 setCountdown(data.countdown)
                 setDisplay(data.countdown)
                 setClock(data.clock)
-                setStart(data.action)
-                console.log('connection information received', data)
-                console.log('set with data',countdown,display,clock)
                 setInfoReceived(true)
-                calculateTime(data.countdown, data.clock);
-                //convert();
-                console.log('setInfoReceived', infoReceived)
+                calculateTime(true, data.action, data.countdown, data.clock);
+                console.log('connection information received', data)
             });
         }
 
@@ -56,7 +61,7 @@ const useTimer = (roomId) => {
             setCountdown(data.countdown)
             setClock(data.clock)
             setStart(data.action)
-            calculateTime(data.countdown, data.clock);
+            calculateTime(true, data.action, data.countdown, data.clock);
             console.log('information received', data)
         });
 
@@ -79,10 +84,10 @@ const useTimer = (roomId) => {
         };
     }, [roomId]);
 
-    //calculates display time in ms based on server data
-    const calculateTime = (currentCountdown, currentClock) => {
-        if (infoReceived === true) {
-            if (start === false) {
+    // calculates timer time in ms based on server data
+    const calculateTime = (currentInfoReceived, currentStart, currentCountdown, currentClock) => {
+        if (currentInfoReceived) {
+            if (!currentStart) {
                 setDisplay(currentCountdown)
             } else {
                 const difference = Date.now()-currentClock
@@ -93,6 +98,7 @@ const useTimer = (roomId) => {
         }
     } 
 
+    // checks if alarm should be sounding
     const checkAlarm = () => {
         if (infoReceived === true) {
             if (display === 0 && !alarmSound) {
@@ -106,17 +112,19 @@ const useTimer = (roomId) => {
         }
     }
 
-
+    // calls calculateTime and checkAlarm every second
     useEffect(() => {
 
+       if (start) {
         const foobar = setInterval(()=> {
             console.log(countdown, clock, 'doing things')
-            calculateTime(countdown, clock);
+            calculateTime(infoReceived, start, countdown, clock);
             checkAlarm();
         }, 1000 )
         return function cleanup() {
             clearInterval(foobar)
         }
+       }
     
     });
 
@@ -131,6 +139,7 @@ const useTimer = (roomId) => {
         setStart(newStart);
     }
 
+    // sends work status to server and alters display time when work/rest is clicked or timer hits 0
     const sendWork = (work) => {
         console.log('is it work?', work)
         const newWork = !work;
