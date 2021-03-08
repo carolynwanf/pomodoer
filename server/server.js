@@ -28,14 +28,14 @@ app.get('*', (req, res) => res.sendFile(path.resolve('build', 'index.html')));
 
 
 // cors for dev
-// const io = require('socket.io')(server, {
-//     cors: {
-//         origin: "http://localhost:3000"
-//     }
-// });
+const io = require('socket.io')(server, {
+    cors: {
+        origin: "http://localhost:3000"
+    }
+});
 
 // io declaration for production
-const io = require('socket.io')(server);
+// const io = require('socket.io')(server);
 
 const NEW_TASK_EVENT = "newTaskItem";
 const STATUS_CHANGE = 'statusChange';
@@ -45,6 +45,8 @@ const TIMER_WORK_REST = 'workRestPush';
 const SENDING_USER_ID = 'sendId';
 const INFORMATION_TO_CLIENT = 'sendInfo';
 const POPULATE_TIMER = 'populateTimer';
+const PASSWORD_PLEASE = 'requestPassword';
+const ADD_PASSWORD = 'addPassword';
 
 io.on('connection', (socket) => {
 
@@ -90,9 +92,12 @@ io.on('connection', (socket) => {
                 action: true,
                 countdown: 300000,
                 clock: 0
-            }
+            },
+            password: 'nothing yet'
         }
     }
+
+    io.in(roomId).emit(PASSWORD_PLEASE,  database[roomId].password)
 
     // listens for new tasks
     socket.on(NEW_TASK_EVENT, (data) => {
@@ -202,6 +207,11 @@ io.on('connection', (socket) => {
         io.in(roomId).emit(INFORMATION_TO_CLIENT, {...oneToAlter, work: data.work})
         // console.log('work/rest alteration', JSON.stringify(oneToAlter))
         // console.log('work object', JSON.stringify(database[roomId].work))
+    })
+
+    // listens for password
+    socket.on(ADD_PASSWORD, (data) => {
+        database[roomId].password = data.password
     })
 
     

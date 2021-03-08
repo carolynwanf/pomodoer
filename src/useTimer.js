@@ -2,10 +2,10 @@ import {useEffect, useState, useRef} from 'react';
 import socketIOClient from 'socket.io-client';
 
 //for heroku
-const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
+// const SOCKET_SERVER_URL = 'https://pomodoer.herokuapp.com/';
 
 //for local environ.
-// const SOCKET_SERVER_URL = 'http://localhost:5000';
+const SOCKET_SERVER_URL = 'http://localhost:5000';
 
 
 
@@ -51,7 +51,7 @@ const useTimer = (roomId) => {
                 setClock(data.clock)
                 setInfoReceived(true)
                 calculateTime(true, data.action, data.countdown, data.clock);
-                console.log('connection information received', data)
+                // console.log('connection information received', data)
             });
         }
 
@@ -62,7 +62,7 @@ const useTimer = (roomId) => {
             setClock(data.clock)
             setStart(data.action)
             calculateTime(true, data.action, data.countdown, data.clock);
-            console.log('information received', data)
+            // console.log('information received', data)
         });
 
         socketRef.current.on(TIMER_WORK_REST, (data) => {
@@ -92,8 +92,8 @@ const useTimer = (roomId) => {
             } else {
                 const difference = Date.now()-currentClock
                 setDisplay(Math.max(0,currentCountdown-difference))
-                console.log('difference',difference)
-                console.log('currentDate',Date.now())
+                // console.log('difference',difference)
+                // console.log('currentDate',Date.now())
             }
         }
     } 
@@ -102,7 +102,7 @@ const useTimer = (roomId) => {
     const checkAlarm = () => {
         if (infoReceived === true) {
             if (display === 0 && !alarmSound) {
-                console.log('ALARM IS SOUNDING')
+                // console.log('ALARM IS SOUNDING')
                 setAlarmSound(true)
                 const newWork = work;
                 sendWork(newWork);
@@ -117,7 +117,7 @@ const useTimer = (roomId) => {
 
        if (start) {
         const foobar = setInterval(()=> {
-            console.log(countdown, clock, 'doing things')
+            // console.log(countdown, clock, 'doing things')
             calculateTime(infoReceived, start, countdown, clock);
             checkAlarm();
         }, 1000 )
@@ -141,9 +141,9 @@ const useTimer = (roomId) => {
 
     // sends work status to server and alters display time when work/rest is clicked or timer hits 0
     const sendWork = (work) => {
-        console.log('is it work?', work)
+        // console.log('is it work?', work)
         const newWork = !work;
-        console.log('is it work now?', newWork);
+        // console.log('is it work now?', newWork);
         const newClock = Date.now();
         socketRef.current.emit(TIMER_WORK_REST, {
             work: newWork,
@@ -151,12 +151,12 @@ const useTimer = (roomId) => {
         })
         setWork(newWork);
         if (newWork) {
-            console.log('because it is work, set to 25')
+            // console.log('because it is work, set to 25')
             setDisplay(1500000);
             setCountdown(1500000);
             setClock(newClock);
           } else {
-            console.log('because it is not work, set to 5')
+            // console.log('because it is not work, set to 5')
             setDisplay(300000);
             setCountdown(300000);
             setClock(newClock);
