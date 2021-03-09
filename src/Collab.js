@@ -14,12 +14,23 @@ const Collab = (props) => {
   const [password, setPassword] = useState('')
   const [askForPassword, setAskForPassword] = useState(true);
   const [wrongPassword, setWrongPassword] = useState(false);
-  
+  const [display, setDisplay] = useState(true)
+
 
   // updates password with the value from the 
   const handleChange = (e) => {
       setPassword(e.target.value);
   }
+
+  // if click room, displays password
+  const handlePress = () => {
+    const newDisplay = !display
+    // roomStatus = newDisplay ? 'ROOM'+roomId : databasePassword
+    setDisplay(newDisplay)
+    console.log('handlePress',roomStatus)
+  }
+
+  let roomStatus = display ? 'ROOM: '+roomId : 'PASSWORD: '+databasePassword 
 
 
   // sends task to server so it shows up for both people
@@ -34,50 +45,54 @@ const Collab = (props) => {
     } else if (databasePassword === 'nothing yet') {
       setAskForPassword(false)
       sendPassword(password)
-    } else {
+    } else if (password !== databasePassword){
       setWrongPassword(true)
     }
   }
 
-// makes it so that hitting the enter key also works for submission
+  // makes it so that hitting the enter key also works for submission
   const handleEnter = (e) => {
       if (e.key === 'Enter') {
           handleSubmit()
-      }
+     }
   }
 
-
-  if (askForPassword) {
+  if (askForPassword && !wrongPassword) {
     return (
-      <div>
-        <p>PASSWORD:</p>
-        <input
-          onChange = {handleChange}
-          value = {password}
-          type='text'
-          placeholder='enter a password...'
-          onKeyDown = {handleEnter}
-        ></input>
-         <Button variant='tertiary' className = 'addTask' onClick={handleSubmit}>ENTER</Button>
-      </div>
-    );
-    if (wrongPassword) {
-      return (
-        <div>
-          <p>PASSWORD:</p>
+      <div className='passwordPage'>
+        <h3> ENTER PASSWORD:</h3>
+        <div className = 'passwordForm'>
           <input
             onChange = {handleChange}
             value = {password}
             type='text'
             placeholder='enter a password...'
             onKeyDown = {handleEnter}
+            className = 'passwordBar'
           ></input>
-           <Button variant='tertiary' className = 'addTask' onClick={handleSubmit}>ENTER</Button>
+          <Button variant='tertiary' className = 'addTask' onClick={handleSubmit}>ENTER</Button>
         </div>
-      );
-    }
-  } 
-  else {
+      </div>
+    );
+  } else if (wrongPassword && askForPassword) {
+    return (
+      <div className='passwordPage'>
+        <h3> ENTER PASSWORD:</h3>
+        <div className = 'passwordForm'>
+          <input
+            onChange = {handleChange}
+            value = {password}
+            type='text'
+            placeholder='enter a password...'
+            onKeyDown = {handleEnter}
+            className = 'passwordBar'
+          ></input>
+          <Button variant='tertiary' className = 'addTask' onClick={handleSubmit}>ENTER</Button>
+        </div>
+         <p className='alert'>WRONG PASSWORD</p>
+      </div>
+    ); 
+  } else {
     return (
       <div className="App">
           <div className="App-header">
@@ -92,7 +107,7 @@ const Collab = (props) => {
           <div className='timer'>
             <OurTimer room={roomId}/> 
           </div>
-          <h2>ROOM: {roomId}</h2>
+          <h2 className='room' onClick = {handlePress}>{roomStatus}</h2>
           <ToDoList room={roomId}/>
         
       </div>

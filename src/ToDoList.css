@@ -272,4 +272,49 @@ h2 {
     margin-bottom: 0vmin;
 }
 
+.passwordPage {
+    height: 20vmin;
+    position: relative;
+    margin-top: 40vmin
+
+}
+
+.passwordBar {
+    height: 3vmin;
+    width: 25vmin;
+    border-radius: 1vmin;
+    outline-color: #384635;
+    margin-bottom: 2vmin;
+    padding-left:1vmin;
+    
+}
+
+.passwordForm {
+    margin: 0;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%,-50%);
+}
+
+h3 {
+    text-align: center;
+}
+
+.alert {
+    color:#784b48;
+    font-size: 1.5vmin;
+    margin: 0;
+    position: absolute;
+    top: 65%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%,-50%);
+}
+
+.room {
+    cursor: pointer;
+}
+
 
