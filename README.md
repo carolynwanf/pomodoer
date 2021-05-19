@@ -9,5 +9,5 @@ I'm hoping to add a MongoDB database and clean up the UI.
 
 ### Can a use this app?
 
-Pomodoer is available at 
+Pomodoer is available at https://pomodoer.herokuapp.com/. Because Pomodoer is deployed through Heroku, the app will take some time to spin up! 
 
