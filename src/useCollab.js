@@ -10,6 +10,7 @@ const useCollab = (roomId) => {
     const [databasePassword, setDatabasePassword] = useState('')
   
     useEffect(() => {
+        console.log('forming connection')
         socketRef.current = socketIOClient(SOCKET_SERVER_URL, {
             query:{roomId},
         });
